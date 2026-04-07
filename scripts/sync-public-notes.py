@@ -10,7 +10,7 @@ OUTPUTS = VAULT / '30-Outputs'
 DEST = Path('/Users/bagminsu/wiki-public/quartz/content/public-output')
 
 TITLE_RE = re.compile(r'^#\s+(.+)$', re.MULTILINE)
-WIKILINK_RE = re.compile(r'\[\[([^\]|#]+)(?:#[^\]|]+)?(?:\|[^\]]+)?\]\]')
+WIKILINK_FULL_RE = re.compile(r'\[\[([^\]]+)\]\]')
 
 
 def has_publish_true(text: str) -> bool:
@@ -38,49 +38,69 @@ def clear_dest() -> None:
     DEST.mkdir(parents=True, exist_ok=True)
 
 
+def parse_wikilink(inner: str) -> tuple[str, str]:
+    target, alias = inner, None
+    if '|' in inner:
+        target, alias = inner.split('|', 1)
+    display = alias if alias else target
+    target = target.split('#', 1)[0]
+    display = display.split('#', 1)[0]
+    target_title = Path(target).name.strip()
+    display_text = display.strip() if display.strip() else target_title
+    return target_title, display_text
+
+
+def replace_private_links(text: str, published_titles: set[str], replaced: set[str], source_title: str) -> str:
+    def repl(match: re.Match[str]) -> str:
+        inner = match.group(1)
+        target_title, display_text = parse_wikilink(inner)
+        if target_title in published_titles:
+            return match.group(0)
+        replaced.add(f'{source_title} -> {target_title}')
+        return display_text
+
+    return WIKILINK_FULL_RE.sub(repl, text)
+
+
 def main() -> None:
     clear_dest()
     published: dict[str, Path] = {}
-    raw_contents: dict[str, str] = {}
+    source_texts: dict[str, str] = {}
 
     for md in sorted(OUTPUTS.glob('*.md')):
         text = md.read_text(encoding='utf-8')
         if not has_publish_true(text):
             continue
         title = title_of(text, md.stem)
-        dest_name = slugify(md.name)
-        dest_path = DEST / dest_name
-        dest_path.write_text(text, encoding='utf-8')
-        published[title] = dest_path
-        raw_contents[title] = text
+        published[title] = DEST / slugify(md.name)
+        source_texts[title] = text
 
-    issues: list[str] = []
-    for title, text in raw_contents.items():
-        links = set(WIKILINK_RE.findall(text))
-        for link in sorted(links):
-            link_title = Path(link).name
-            if link_title in published:
-                continue
-            issues.append(f'{title} -> {link_title}')
+    replaced: set[str] = set()
+    published_titles = set(published.keys())
 
+    for title, text in source_texts.items():
+        cleaned = replace_private_links(text, published_titles, replaced, title)
+        published[title].write_text(cleaned, encoding='utf-8')
+
+    replaced_list = sorted(replaced)
     report = DEST / '_publish-report.md'
     lines = ['# Publish Report', '', '## Published Notes']
     for title in sorted(published):
         lines.append(f'- {title}')
-    lines += ['', '## Private Link Warnings']
-    if issues:
-        lines.extend(f'- {item}' for item in issues)
+    lines += ['', '## Replaced Private Links']
+    if replaced_list:
+        lines.extend(f'- {item}' for item in replaced_list)
     else:
         lines.append('- none')
     report.write_text('\n'.join(lines) + '\n', encoding='utf-8')
 
     print(f'published={len(published)}')
-    print(f'warnings={len(issues)}')
+    print(f'replaced_private_links={len(replaced_list)}')
     for title, path in sorted(published.items()):
         print(f'{title} => {path}')
-    if issues:
-        print('private_link_warnings:')
-        for item in issues:
+    if replaced_list:
+        print('replaced_private_links:')
+        for item in replaced_list:
             print(f'  - {item}')
 
 

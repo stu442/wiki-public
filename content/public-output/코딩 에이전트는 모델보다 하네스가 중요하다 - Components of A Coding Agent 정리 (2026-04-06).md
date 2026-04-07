@@ -29,10 +29,10 @@ Sebastian Raschka의 "Components of A Coding Agent"는 무슨 내용이고, 왜 
 - AGENTS.md, 메모리 파일, 위키, spec 같은 문서도 하네스의 일부로 볼 수 있다.
 
 ## 근거
-- [[Sebastian Raschka - Components of A Coding Agent (Article, 2026-04-04)]]
-- [[Harness Engineering]]
-- [[Agentic Workflow]]
-- [[Pi (AI coding agent)]]
+- Sebastian Raschka - Components of A Coding Agent (Article, 2026-04-04)
+- Harness Engineering
+- Agentic Workflow
+- Pi (AI coding agent)
 
 ## 세부 내용
 ### 1. LLM, reasoning model, agent, harness를 구분해야 한다
@@ -87,7 +87,7 @@ Sebastian Raschka의 "Components of A Coding Agent"는 무슨 내용이고, 왜 
 - 앞으로 중요한 것은 더 큰 모델만 찾는 것이 아니라, 내가 반복적으로 쓸 수 있는 작은 하네스를 잘 설계하는 것이다.
 
 ## 다음 액션
-- 이 6요소 기준으로 [[Pi (AI coding agent)]], Codex, Claude Code, Hermes를 비교해본다.
+- 이 6요소 기준으로 Pi (AI coding agent), Codex, Claude Code, Hermes를 비교해본다.
 - Hermes 워크플로를 이 틀로 진단해 취약한 부품을 찾는다.
 - AGENTS.md / wiki / output / project 문서의 역할 분담을 더 명확히 정리한다.
 
@@ -97,8 +97,8 @@ Sebastian Raschka의 "Components of A Coding Agent"는 무슨 내용이고, 왜 
 - 개인용 하네스를 설계할 때 최소 구성은 어디까지인가?
 
 ## Related
-- [[Harness Engineering]]
-- [[Agentic Workflow]]
-- [[Pi (AI coding agent)]]
-- [[Sebastian Raschka - Components of A Coding Agent (Article, 2026-04-04)]]
-- [[Outputs Index]]
+- Harness Engineering
+- Agentic Workflow
+- Pi (AI coding agent)
+- Sebastian Raschka - Components of A Coding Agent (Article, 2026-04-04)
+- Outputs Index
