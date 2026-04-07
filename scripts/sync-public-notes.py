@@ -83,17 +83,6 @@ def main() -> None:
         published[title].write_text(cleaned, encoding='utf-8')
 
     replaced_list = sorted(replaced)
-    report = DEST / '_publish-report.md'
-    lines = ['# Publish Report', '', '## Published Notes']
-    for title in sorted(published):
-        lines.append(f'- {title}')
-    lines += ['', '## Replaced Private Links']
-    if replaced_list:
-        lines.extend(f'- {item}' for item in replaced_list)
-    else:
-        lines.append('- none')
-    report.write_text('\n'.join(lines) + '\n', encoding='utf-8')
-
     print(f'published={len(published)}')
     print(f'replaced_private_links={len(replaced_list)}')
     for title, path in sorted(published.items()):

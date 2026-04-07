@@ -1,16 +1,16 @@
 ---
-title: Frogsoo Public Wiki
+title: Frogsoo's Public Wiki
 ---
 
-# Frogsoo Public Wiki
+# Frogsoo's Public Wiki
 
-선별한 Hermes Output 문서를 공개하는 Quartz 위키다.
+안녕하세요. 여기는 제가 공부하고 실험하면서 정리한 글들을 조금씩 공개해두는 위키예요.
+
+개인 Obsidian 위키 전체를 그대로 공개하기보다는, 외부에 공유해도 좋겠다고 느낀 문서들만 골라서 옮기고 있어요. 설명형 글, 개념 정리, 시작 가이드 같은 문서들을 중심으로 천천히 쌓아가려고 합니다.
+
+지금은 우선 Output 노트들부터 하나씩 공개하고 있어요.
 
 ## 현재 공개 문서
 - [[코딩 에이전트는 모델보다 하네스가 중요하다 - Components of A Coding Agent 정리 (2026-04-06)]]
 - [[코딩 에이전트의 6가지 핵심 구성요소 상세 해설 (2026-04-06)]]
 - [[OpenSpec 사용 방법 및 시작 가이드 (2026-04-06)]]
-
-## 메모
-- 이 사이트는 원본 Obsidian 볼트 전체가 아니라 `publish: true`가 붙은 일부 Output만 공개한다.
-- 문서 공개 여부는 원본 볼트의 frontmatter에서 관리한다.
